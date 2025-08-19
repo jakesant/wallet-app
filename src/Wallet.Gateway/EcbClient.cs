@@ -30,10 +30,10 @@ namespace Wallet.Gateway
         {
             try
             {
-                using var req = new HttpRequestMessage(HttpMethod.Get, _options.Path);
-                // set headers per request (safer than DefaultRequestHeaders)
+                var requestUri = new Uri(new Uri(_options.BaseUrl, UriKind.Absolute), _options.Path);
+
+                using var req = new HttpRequestMessage(HttpMethod.Get, requestUri);
                 req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-                req.Headers.UserAgent.ParseAdd("Wallet.EcbGateway/0.1");
 
                 using var resp = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, ct)
                                             .ConfigureAwait(false);
