@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Gateway", "src\Wallet.Gateway\Wallet.Gateway.csproj", "{1EA80B53-9BED-557D-1377-DE51A4A61E39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Demo", "src\Wallet.Demo\Wallet.Demo.csproj", "{2D10FEC4-4805-4AC5-B98F-E74E442FA972}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|x64.Build.0 = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Debug|x86.Build.0 = Debug|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|x64.ActiveCfg = Release|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|x64.Build.0 = Release|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|x86.ActiveCfg = Release|Any CPU
+		{1EA80B53-9BED-557D-1377-DE51A4A61E39}.Release|x86.Build.0 = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|x64.Build.0 = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|x64.ActiveCfg = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|x64.Build.0 = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D10FEC4-4805-4AC5-B98F-E74E442FA972} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FED40F99-F48D-4024-9D6B-AB2C7A2BE784}
+	EndGlobalSection
+EndGlobal
