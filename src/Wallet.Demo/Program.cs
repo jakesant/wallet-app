@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Wallet.Gateway;
 using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure;
@@ -8,16 +10,35 @@ using Wallet.Infrastructure.Repository;
 
 try
 {
-    using var http = new HttpClient();
+    var config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false)
+        .AddEnvironmentVariables()
+        .Build();
 
-    var options = new EcbClientOptions
+
+    var services = new ServiceCollection();
+
+    services.AddDbContext<AppDbContext>(opt =>
+        opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+    services.Configure<EcbClientOptions>(config.GetSection("Client"));
+
+    services.AddHttpClient<IEcbClient, EcbClient>(client =>
     {
-        BaseUrl = "https://www.ecb.europa.eu",
-        Path = "/stats/eurofxref/eurofxref-daily.xml",
-        TimeoutSeconds = 5
-    };
+        client.BaseAddress = new Uri("https://www.ecb.europa.eu");
+        client.Timeout = TimeSpan.FromSeconds(5);
+    });
 
-    IEcbClient ecb = new EcbClient(options, http);
+    services.AddScoped<ExchangeRateRepository>();
+
+    var provider = services.BuildServiceProvider();
+
+    using var scope = provider.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+
+    var ecb = scope.ServiceProvider.GetRequiredService<IEcbClient>();
+    var repo = scope.ServiceProvider.GetRequiredService<ExchangeRateRepository>();
 
     var snapshot = await ecb.GetLatestAsync();
 
@@ -31,13 +52,6 @@ try
             Console.WriteLine($"1 EUR = {rate} {code}");
     }
 
-    var conn = "Server=localhost;Database=WalletTaskDb;Trusted_Connection=True;TrustServerCertificate=True;"; //move to options
-    var dbOptions = new DbContextOptionsBuilder<AppDbContext>()
-        .UseSqlServer(conn)
-        .Options;
-
-    using var db = new AppDbContext(dbOptions);
-    var upserter = new ExchangeRateRepository(db);
     var rates = snapshot.Rates.Select(r =>
         new ExchangeRate
         {
@@ -47,7 +61,7 @@ try
             Rate = r.Value
         });
 
-    await upserter.UpsertRatesAsync(rates);
+    await repo.UpsertRatesAsync(rates);
 
     Console.WriteLine("The exchange rates have been saved to the DB.");
 }
