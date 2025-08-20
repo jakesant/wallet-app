@@ -1,6 +1,10 @@
-﻿using Wallet.Gateway;
-using Wallet.Gateway.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Wallet.Gateway;
 using Wallet.Gateway.Interfaces;
+using Wallet.Infrastructure;
+using Wallet.Infrastructure.Data;
+using Wallet.Infrastructure.Entities;
+using Wallet.Infrastructure.Repository;
 
 try
 {
@@ -26,6 +30,26 @@ try
         if (snapshot.Rates.TryGetValue(code, out var rate))
             Console.WriteLine($"1 EUR = {rate} {code}");
     }
+
+    var conn = "Server=localhost;Database=WalletTaskDb;Trusted_Connection=True;TrustServerCertificate=True;"; //move to options
+    var dbOptions = new DbContextOptionsBuilder<AppDbContext>()
+        .UseSqlServer(conn)
+        .Options;
+
+    using var db = new AppDbContext(dbOptions);
+    var upserter = new ExchangeRateRepository(db);
+    var rates = snapshot.Rates.Select(r =>
+        new ExchangeRate
+        {
+            Date = DateOnly.FromDateTime(snapshot.TimestampUtc),
+            BaseCurrency = snapshot.BaseCurrency,
+            CounterCurrency = r.Key,
+            Rate = r.Value
+        });
+
+    await upserter.UpsertRatesAsync(rates);
+
+    Console.WriteLine("The exchange rates have been saved to the DB.");
 }
 catch (Exception ex)
 {
