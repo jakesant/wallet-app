@@ -26,8 +26,8 @@ namespace Wallet.Infrastructure.Repository
                 WHEN MATCHED THEN
                     UPDATE SET target.Rate = source.Rate, target.BaseCurrency = source.BaseCurrency, target.UpdatedAtUtc = SYSUTCDATETIME()
                 WHEN NOT MATCHED THEN
-                    INSERT (Date, BaseCurrency, CounterCurrency, Rate, UpdatedAtUtc)
-                    VALUES (source.Date, source.BaseCurrency, source.CounterCurrency, source.Rate, SYSUTCDATETIME());";
+                    INSERT (Date, BaseCurrency, CounterCurrency, Rate, CreatedAtUtc, UpdatedAtUtc)
+                    VALUES (source.Date, source.BaseCurrency, source.CounterCurrency, source.Rate, SYSUTCDATETIME(), SYSUTCDATETIME());";
 
             var parameters = new List<SqlParameter>();
             var valuesList = new List<string>();
