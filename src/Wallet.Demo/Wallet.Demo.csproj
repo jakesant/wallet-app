@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Wallet.Infrastructure\Wallet.Infrastructure.csproj" />
     <ProjectReference Include="..\Wallet.Gateway\Wallet.Gateway.csproj" />
   </ItemGroup>
 

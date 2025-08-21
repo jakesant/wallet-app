@@ -13,4 +13,9 @@
     <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Wallet.Domain\Wallet.Domain.csproj" />
+    <ProjectReference Include="..\..\Wallet.Infrastructure\Wallet.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
