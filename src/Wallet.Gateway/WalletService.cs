@@ -25,17 +25,17 @@ namespace Wallet.Gateway
             _resolver = resolver;
         }
 
-        public async Task AdjustBalanceAsync(long walletId, decimal amount, string strategy, CancellationToken ct = default)
+        public async Task AdjustBalanceAsync(long walletId, decimal amount, string strategy, CancellationToken cancellationToken = default)
         {
             if (amount <= 0) throw new ArgumentException("Adjustment amount must be positive.");
 
-            var wallet = await _wallets.GetByIdAsync(walletId, ct)
+            var wallet = await _wallets.GetByIdAsync(walletId, cancellationToken)
                 ?? throw new InvalidOperationException("Wallet not found.");
 
             var strat = _resolver.Resolve(strategy);
-            await strat.AdjustAsync(wallet, amount, ct);
+            await strat.AdjustAsync(wallet, amount, cancellationToken);
 
-            await _wallets.UpdateAsync(wallet, ct);
+            await _wallets.UpdateAsync(wallet, cancellationToken);
         }
     }
 }
