@@ -8,6 +8,7 @@ using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Data;
 using Wallet.Infrastructure.Repository;
 using Wallet.Demo.Jobs;
+using Wallet.Gateway.Extensions;
 
 try
 {
@@ -23,12 +24,8 @@ try
             services.AddDbContext<AppDbContext>(opt =>
                 opt.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-            services.Configure<EcbClientOptions>(config.GetSection("Client"));
-            services.AddHttpClient<IEcbClient, EcbClient>(client =>
-            {
-                client.BaseAddress = new Uri("https://www.ecb.europa.eu");
-                client.Timeout = TimeSpan.FromSeconds(5);
-            });
+            services.AddEcbGateway(options =>
+                config.GetSection("Client").Bind(options));
 
             services.AddScoped<ExchangeRateRepository>();
 
