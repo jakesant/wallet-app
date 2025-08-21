@@ -21,9 +21,11 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     }
 
     public DbSet<ExchangeRate> ExchangeRates => Set<ExchangeRate>();
+    public DbSet<WalletAccount> WalletAccounts => Set<WalletAccount>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ExchangeRateConfiguration());
+        modelBuilder.ApplyConfiguration(new WalletConfiguration());
     }
 }
