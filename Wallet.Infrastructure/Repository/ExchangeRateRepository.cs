@@ -24,10 +24,10 @@ namespace Wallet.Infrastructure.Repository
                 USING (VALUES {0}) AS source (Date, BaseCurrency, CounterCurrency, Rate)
                 ON target.Date = source.Date AND target.CounterCurrency = source.CounterCurrency
                 WHEN MATCHED THEN
-                    UPDATE SET target.Rate = source.Rate, target.BaseCurrency = source.BaseCurrency
+                    UPDATE SET target.Rate = source.Rate, target.BaseCurrency = source.BaseCurrency, target.UpdatedAtUtc = SYSUTCDATETIME()
                 WHEN NOT MATCHED THEN
-                    INSERT (Date, BaseCurrency, CounterCurrency, Rate)
-                    VALUES (source.Date, source.BaseCurrency, source.CounterCurrency, source.Rate);";
+                    INSERT (Date, BaseCurrency, CounterCurrency, Rate, UpdatedAtUtc)
+                    VALUES (source.Date, source.BaseCurrency, source.CounterCurrency, source.Rate, SYSUTCDATETIME());";
 
             var parameters = new List<SqlParameter>();
             var valuesList = new List<string>();
