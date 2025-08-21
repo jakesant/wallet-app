@@ -14,7 +14,7 @@ namespace Wallet.Infrastructure.Repository
             _db = db;
         }
 
-        public async Task UpsertRatesAsync(IEnumerable<ExchangeRate> rates, CancellationToken ct = default)
+        public async Task UpsertRatesAsync(IEnumerable<ExchangeRate> rates, CancellationToken cancellationToken = default)
         {
             if (!rates.Any())
                 return;
@@ -48,7 +48,7 @@ namespace Wallet.Infrastructure.Repository
 
             var finalSql = string.Format(sql, string.Join(", ", valuesList));
 
-            await _db.Database.ExecuteSqlRawAsync(finalSql, parameters.ToArray(), ct);
+            await _db.Database.ExecuteSqlRawAsync(finalSql, parameters.ToArray(), cancellationToken);
         }
     }
 }

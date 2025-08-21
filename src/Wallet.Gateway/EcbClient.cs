@@ -27,7 +27,7 @@ namespace Wallet.Gateway
             //_http.DefaultRequestHeaders.Accept.Clear();
             //_http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
         }
-        public async Task<CurrencyRate> GetLatestAsync(CancellationToken ct = default)
+        public async Task<CurrencyRate> GetLatestAsync(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -36,14 +36,14 @@ namespace Wallet.Gateway
                 using var req = new HttpRequestMessage(HttpMethod.Get, requestUri);
                 req.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-                using var resp = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, ct)
+                using var resp = await _http.SendAsync(req, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                                             .ConfigureAwait(false);
                 resp.EnsureSuccessStatusCode();
 
-                var xml = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
+                var xml = await resp.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
                 return EcbParser.ParseLatestRates(xml);
             }
-            catch (OperationCanceledException) when (ct.IsCancellationRequested)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
                 throw;
             }
