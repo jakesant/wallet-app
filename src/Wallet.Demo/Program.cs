@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
 using Wallet.Gateway;
 using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Data;
 using Wallet.Infrastructure.Repository;
+using Wallet.Demo.Jobs;
 
 try
 {
@@ -29,6 +31,16 @@ try
             });
 
             services.AddScoped<ExchangeRateRepository>();
+
+            services.AddQuartz(q =>
+            {
+                var jobKey = new JobKey("RateUpdateJob");
+                q.AddJob<RateUpdateJob>(opts => opts.WithIdentity(jobKey));
+                q.AddTrigger(opts => opts.ForJob(jobKey)
+                    .WithIdentity("RateUpdateJob-trigger")
+                    .WithSimpleSchedule(x => x.WithIntervalInMinutes(1).RepeatForever()));
+            });
+            services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
         })
         .Build();
 
