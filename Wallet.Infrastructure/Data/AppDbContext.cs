@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Wallet.Infrastructure.Configurations;
-using Wallet.Infrastructure.Entities;
+using Wallet.Domain.Entities;
 
 namespace Wallet.Infrastructure.Data;
 

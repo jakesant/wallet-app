@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wallet.Domain;
+using Wallet.Domain.Entities;
 using Wallet.Infrastructure.Repository;
 using Wallet.Infrastructure.Strategy;
 

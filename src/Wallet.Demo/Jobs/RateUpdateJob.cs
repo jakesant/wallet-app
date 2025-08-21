@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wallet.Gateway.Interfaces;
-using Wallet.Infrastructure.Entities;
+using Wallet.Domain.Entities;
 using Wallet.Infrastructure.Repository;
 
 namespace Wallet.Demo.Jobs

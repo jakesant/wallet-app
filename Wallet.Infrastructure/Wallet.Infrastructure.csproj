@@ -22,10 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SQL\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Wallet.Domain\Wallet.Domain.csproj" />
   </ItemGroup>
 

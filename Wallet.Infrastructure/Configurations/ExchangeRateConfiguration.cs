@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Wallet.Infrastructure.Entities;
+using Wallet.Domain.Entities;
 
 namespace Wallet.Infrastructure.Configurations;
 
