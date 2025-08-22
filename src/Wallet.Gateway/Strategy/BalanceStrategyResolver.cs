@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Wallet.Domain.Enums;
+using Wallet.Gateway.Interfaces;
 
 namespace Wallet.Infrastructure.Strategy
 {
-    public class BalanceStrategyResolver
+    public class BalanceStrategyResolver : IBalanceStrategyResolver
     {
         private readonly IServiceProvider _provider;
 

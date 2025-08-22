@@ -8,6 +8,7 @@ using Wallet.Infrastructure.Repository;
 using Wallet.Infrastructure.Strategy;
 using Xunit;
 using Microsoft.Extensions.Caching.Memory;
+using Wallet.Gateway.Interfaces;
 
 namespace Wallet.Tests.Services
 {
@@ -15,7 +16,7 @@ namespace Wallet.Tests.Services
     {
         private readonly Mock<ExchangeRateRepository> _exchangeRateRepo;
         private readonly Mock<WalletAccountRepository> _walletRepo;
-        private readonly Mock<BalanceStrategyResolver> _resolver;
+        private readonly Mock<IBalanceStrategyResolver> _resolver;
         private readonly Mock<IBalanceStrategy> _strategy;
         private readonly CacheService _cache;
         private readonly WalletService _service;
@@ -24,7 +25,7 @@ namespace Wallet.Tests.Services
         {
             _exchangeRateRepo = new Mock<ExchangeRateRepository>(null!);
             _walletRepo = new Mock<WalletAccountRepository>(null!);
-            _resolver = new Mock<BalanceStrategyResolver>(null!);
+            _resolver = new Mock<IBalanceStrategyResolver>();
             _strategy = new Mock<IBalanceStrategy>();
             _cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
 
@@ -55,6 +56,7 @@ namespace Wallet.Tests.Services
 
             var result = await _service.AdjustBalanceAsync(1, 50m, "EUR", BalanceStrategyType.AddFunds);
 
+            _resolver.Verify(r => r.Resolve(BalanceStrategyType.AddFunds), Times.Once);
             _strategy.Verify(s => s.AdjustAsync(wallet, 50m, It.IsAny<CancellationToken>()), Times.Once);
             Assert.Equal(1, result.Id);
         }

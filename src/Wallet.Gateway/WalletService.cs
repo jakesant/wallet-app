@@ -1,8 +1,8 @@
 ﻿using Wallet.Domain.Entities;
 using Wallet.Domain.Enums;
 using Wallet.Gateway.DTOs;
+using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Repository;
-using Wallet.Infrastructure.Strategy;
 
 namespace Wallet.Gateway
 {
@@ -10,13 +10,13 @@ namespace Wallet.Gateway
     {
         private readonly ExchangeRateRepository _exchangeRates;
         private readonly WalletAccountRepository _wallets;
-        private readonly BalanceStrategyResolver _resolver;
+        private readonly IBalanceStrategyResolver _resolver;
         private readonly CacheService _cache;
 
         public WalletService(
             ExchangeRateRepository exchangeRates,
             WalletAccountRepository wallets,
-            BalanceStrategyResolver resolver,
+            IBalanceStrategyResolver resolver,
             CacheService cache)
         {
             _exchangeRates = exchangeRates;

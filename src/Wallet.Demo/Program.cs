@@ -29,7 +29,7 @@ builder.Services.AddHttpClient<IEcbClient, EcbClient>(client =>
 builder.Services.AddScoped<ExchangeRateRepository>();
 builder.Services.AddScoped<WalletAccountRepository>();
 builder.Services.AddScoped<WalletService>();
-builder.Services.AddScoped<BalanceStrategyResolver>();
+builder.Services.AddScoped<IBalanceStrategyResolver, BalanceStrategyResolver>();
 builder.Services.AddScoped<AddFundsStrategy>();
 builder.Services.AddScoped<SubtractFundsStrategy>();
 builder.Services.AddScoped<ForceSubtractFundsStrategy>();
