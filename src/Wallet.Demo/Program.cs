@@ -3,12 +3,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
+using Wallet.Demo.Jobs;
 using Wallet.Gateway;
+using Wallet.Gateway.Extensions;
 using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Data;
 using Wallet.Infrastructure.Repository;
-using Wallet.Demo.Jobs;
-using Wallet.Gateway.Extensions;
+using Wallet.Infrastructure.Strategy;
 
 try
 {
@@ -28,6 +29,9 @@ try
                 config.GetSection("Client").Bind(options));
 
             services.AddScoped<ExchangeRateRepository>();
+            services.AddScoped<WalletAccountRepository>();
+            services.AddScoped<WalletService>();
+            services.AddScoped<BalanceStrategyResolver>();
 
             services.AddQuartz(q =>
             {
