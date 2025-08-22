@@ -24,10 +24,10 @@ namespace Wallet.Infrastructure.Configurations
                    .IsRequired();
 
             builder.Property(w => w.CreatedAtUtc)
-                   .HasDefaultValueSql("GETUTCDATE()");
+                   .HasDefaultValueSql("SYSUTCDATETIME()");
 
             builder.Property(w => w.UpdatedAtUtc)
-                   .HasDefaultValueSql("GETUTCDATE()");
+                   .HasDefaultValueSql("SYSUTCDATETIME()");
         }
     }
 }
