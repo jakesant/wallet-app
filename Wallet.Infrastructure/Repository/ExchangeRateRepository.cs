@@ -50,5 +50,33 @@ namespace Wallet.Infrastructure.Repository
 
             await _db.Database.ExecuteSqlRawAsync(finalSql, parameters.ToArray(), cancellationToken);
         }
+
+        public async Task<decimal?> GetRateAsync(string fromCurrency, string toCurrency, DateOnly date, CancellationToken cancellationToken = default)
+        {
+            if (fromCurrency.Equals(toCurrency, StringComparison.OrdinalIgnoreCase))
+                return 1m;
+
+            var rate = await _db.ExchangeRates
+                .Where(r =>
+                    r.BaseCurrency == fromCurrency &&
+                    r.CounterCurrency == toCurrency &&
+                    r.Date == date)
+                .Select(r => (decimal?)r.Rate)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (rate != null)
+                return rate;
+
+            var inverse = await _db.ExchangeRates
+                .Where(r =>
+                    r.BaseCurrency == toCurrency &&
+                    r.CounterCurrency == fromCurrency &&
+                    r.Date == date)
+                .Select(r => (decimal?)(1 / r.Rate))
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return inverse;
+        }
+
     }
 }
