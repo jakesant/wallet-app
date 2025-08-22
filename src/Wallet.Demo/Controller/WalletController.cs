@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
-using Wallet.Domain.Entities;
 using Wallet.Gateway;
 using Wallet.Gateway.DTOs;
-using Wallet.Infrastructure;
 
 namespace Wallet.Demo.Controllers
 {
