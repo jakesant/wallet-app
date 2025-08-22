@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -13,7 +14,18 @@ namespace Wallet.Tests.Controllers
 
         public WalletAccountsControllerTests(WebApplicationFactory<Program> factory)
         {
-            _client = factory.CreateClient();
+            //Disabling quartz background job for tests
+            _client = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    var descriptor = services.SingleOrDefault(
+                        d => d.ServiceType == typeof(IHostedService) &&
+                             d.ImplementationType?.Name == "QuartzHostedService");
+                    if (descriptor != null)
+                        services.Remove(descriptor);
+                });
+            }).CreateClient();
         }
 
         [Fact]
