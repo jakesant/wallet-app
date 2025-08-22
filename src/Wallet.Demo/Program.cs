@@ -68,6 +68,9 @@ builder.Services.AddRateLimiter(options =>
     options.RejectionStatusCode = 429;
 });
 
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<CacheService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

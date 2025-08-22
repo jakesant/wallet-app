@@ -16,15 +16,18 @@ namespace Wallet.Gateway
         private readonly ExchangeRateRepository _exchangeRates;
         private readonly WalletAccountRepository _wallets;
         private readonly BalanceStrategyResolver _resolver;
+        private readonly CacheService _cache;
 
         public WalletService(
             ExchangeRateRepository exchangeRates,
             WalletAccountRepository wallets,
-            BalanceStrategyResolver resolver)
+            BalanceStrategyResolver resolver,
+            CacheService cache)
         {
             _exchangeRates = exchangeRates;
             _wallets = wallets;
             _resolver = resolver;
+            _cache = cache;
         }
 
         public async Task<WalletDto> AdjustBalanceAsync(long walletId, decimal amount, string currency, string strategy, CancellationToken cancellationToken = default)
@@ -37,11 +40,19 @@ namespace Wallet.Gateway
             decimal finalAmount = amount;
             if (!string.Equals(wallet.Currency, currency, StringComparison.OrdinalIgnoreCase))
             {
-                var rate = await _exchangeRates.GetRateAsync(currency, wallet.Currency, DateOnly.FromDateTime(DateTime.UtcNow), cancellationToken);
-                if (rate == null)
-                    throw new InvalidOperationException($"No exchange rate found for {currency} -> {wallet.Currency}");
+                var cachedRate = _cache.GetRate(currency, wallet.Currency);
 
-                finalAmount = amount * rate.Value;
+                if(cachedRate == null)
+                {
+                    var rate = await _exchangeRates.GetRateAsync(currency, wallet.Currency, DateOnly.FromDateTime(DateTime.UtcNow), cancellationToken);
+                    if (rate == null)
+                        throw new InvalidOperationException($"No exchange rate found for {currency} -> {wallet.Currency}");
+
+                    cachedRate = rate.Value;
+                    _cache.SetRate(currency, wallet.Currency, cachedRate.Value);
+                }
+
+                finalAmount = amount * cachedRate.Value;
             }
 
             var strat = _resolver.Resolve(strategy);
@@ -76,11 +87,19 @@ namespace Wallet.Gateway
 
             if (!string.IsNullOrWhiteSpace(targetCurrency) && targetCurrency != wallet.Currency)
             {
-                var rate = await _exchangeRates.GetRateAsync(wallet.Currency, targetCurrency, DateOnly.FromDateTime(DateTime.UtcNow), cancellationToken);
-                if (rate == null)
-                    throw new InvalidOperationException($"No exchange rate found for {wallet.Currency} -> {targetCurrency}");
+                var cachedRate = _cache.GetRate(wallet.Currency, targetCurrency);
+                if (cachedRate == null)
+                {
+                    var rate = await _exchangeRates.GetRateAsync(wallet.Currency, targetCurrency, DateOnly.FromDateTime(DateTime.UtcNow), cancellationToken);
+                    if (rate == null)
+                        throw new InvalidOperationException($"No exchange rate found for {wallet.Currency} -> {targetCurrency}");
 
-                balance = balance * rate.Value;
+                    cachedRate = rate.Value;
+                    _cache.SetRate(wallet.Currency, targetCurrency, cachedRate.Value);
+                }
+
+                
+                balance = balance * cachedRate.Value;
                 currency = targetCurrency;
             }
 

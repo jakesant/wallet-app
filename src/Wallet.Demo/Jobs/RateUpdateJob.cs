@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wallet.Gateway.Interfaces;
 using Wallet.Domain.Entities;
+using Wallet.Gateway;
+using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Repository;
 
 namespace Wallet.Demo.Jobs
@@ -14,11 +15,13 @@ namespace Wallet.Demo.Jobs
     {
         private readonly IEcbClient _ecbClient;
         private readonly ExchangeRateRepository _repository;
+        private readonly CacheService _cache;
 
-        public RateUpdateJob(IEcbClient ecbClient, ExchangeRateRepository repository)
+        public RateUpdateJob(IEcbClient ecbClient, ExchangeRateRepository repository, CacheService cacheService)
         {
             _ecbClient = ecbClient;
             _repository = repository;
+            _cache = cacheService;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -34,8 +37,9 @@ namespace Wallet.Demo.Jobs
             });
 
             await _repository.UpsertRatesAsync(rates, context.CancellationToken);
+            _cache.SetRates(rates);
 
-            Console.WriteLine($"Background job: Updated {snapshot.Rates.Count} rates at {DateTime.UtcNow}");
+            Console.WriteLine($"Background job: Updated {snapshot.Rates.Count} rates and cache at {DateTime.UtcNow}");
         }
     }
 }
