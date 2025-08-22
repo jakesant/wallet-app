@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Infrastructure", "Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Domain", "Wallet.Domain\Wallet.Domain.csproj", "{61D2FA5A-F515-499A-8E0B-1A1248A543FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wallet.Tests", "Wallet.Tests\Wallet.Tests.csproj", "{2C991859-6E3A-8D51-AA36-91AEF128DDAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,18 @@ Global
 		{61D2FA5A-F515-499A-8E0B-1A1248A543FB}.Release|x64.Build.0 = Release|Any CPU
 		{61D2FA5A-F515-499A-8E0B-1A1248A543FB}.Release|x86.ActiveCfg = Release|Any CPU
 		{61D2FA5A-F515-499A-8E0B-1A1248A543FB}.Release|x86.Build.0 = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|x64.Build.0 = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C991859-6E3A-8D51-AA36-91AEF128DDAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
