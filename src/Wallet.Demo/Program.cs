@@ -27,7 +27,7 @@ builder.Services.AddHttpClient<IEcbClient, EcbClient>(client =>
 });
 
 builder.Services.AddScoped<ExchangeRateRepository>();
-builder.Services.AddScoped<WalletAccountRepository>();
+builder.Services.AddScoped<IWalletAccountRepository, WalletAccountRepository>();
 builder.Services.AddScoped<WalletService>();
 builder.Services.AddScoped<IBalanceStrategyResolver, BalanceStrategyResolver>();
 builder.Services.AddScoped<AddFundsStrategy>();

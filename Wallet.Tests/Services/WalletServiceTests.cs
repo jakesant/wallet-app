@@ -15,7 +15,7 @@ namespace Wallet.Tests.Services
     public class WalletServiceTests
     {
         private readonly Mock<ExchangeRateRepository> _exchangeRateRepo;
-        private readonly Mock<WalletAccountRepository> _walletRepo;
+        private readonly Mock<IWalletAccountRepository> _walletRepo;
         private readonly Mock<IBalanceStrategyResolver> _resolver;
         private readonly Mock<IBalanceStrategy> _strategy;
         private readonly CacheService _cache;
@@ -24,7 +24,7 @@ namespace Wallet.Tests.Services
         public WalletServiceTests()
         {
             _exchangeRateRepo = new Mock<ExchangeRateRepository>(null!);
-            _walletRepo = new Mock<WalletAccountRepository>(null!);
+            _walletRepo = new Mock<IWalletAccountRepository>();
             _resolver = new Mock<IBalanceStrategyResolver>();
             _strategy = new Mock<IBalanceStrategy>();
             _cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));

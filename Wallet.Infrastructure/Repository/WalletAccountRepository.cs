@@ -3,7 +3,7 @@ using Wallet.Domain.Entities;
 
 namespace Wallet.Infrastructure.Repository
 {
-    public class WalletAccountRepository
+    public class WalletAccountRepository : IWalletAccountRepository
     {
         private readonly AppDbContext _db;
 

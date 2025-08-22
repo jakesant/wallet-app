@@ -9,13 +9,13 @@ namespace Wallet.Gateway
     public class WalletService
     {
         private readonly ExchangeRateRepository _exchangeRates;
-        private readonly WalletAccountRepository _wallets;
+        private readonly IWalletAccountRepository _wallets;
         private readonly IBalanceStrategyResolver _resolver;
         private readonly CacheService _cache;
 
         public WalletService(
             ExchangeRateRepository exchangeRates,
-            WalletAccountRepository wallets,
+            IWalletAccountRepository wallets,
             IBalanceStrategyResolver resolver,
             CacheService cache)
         {
