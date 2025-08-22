@@ -7,7 +7,6 @@ using Quartz;
 using System.Threading.RateLimiting;
 using Wallet.Demo.Jobs;
 using Wallet.Gateway;
-using Wallet.Gateway.Extensions;
 using Wallet.Gateway.Interfaces;
 using Wallet.Infrastructure.Data;
 using Wallet.Infrastructure.Repository;

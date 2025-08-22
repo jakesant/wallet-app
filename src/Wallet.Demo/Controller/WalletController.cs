@@ -22,6 +22,7 @@ namespace Wallet.Demo.Controllers
             if (string.IsNullOrWhiteSpace(currency))
                 return BadRequest("Wallet Currency is required.");
 
+            currency= currency.ToUpperInvariant();
             var wallet = await _walletService.CreateWalletAsync(currency);
             return CreatedAtAction(nameof(GetWalletBalance), new { walletId = wallet.Id }, wallet);
         }
