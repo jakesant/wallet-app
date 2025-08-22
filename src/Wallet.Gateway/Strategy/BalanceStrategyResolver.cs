@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Wallet.Domain.Enums;
 
 namespace Wallet.Infrastructure.Strategy
 {
@@ -11,13 +12,13 @@ namespace Wallet.Infrastructure.Strategy
             _provider = provider;
         }
 
-        public IBalanceStrategy Resolve(string strategyType)
+        public IBalanceStrategy Resolve(BalanceStrategyType strategyType)
         {
-            return strategyType.ToLower() switch
+            return strategyType switch
             {
-                "forcesubtractfundsstrategy" => _provider.GetRequiredService<ForceSubtractFundsStrategy>(),
-                "subtractfundsstrategy" => _provider.GetRequiredService<SubtractFundsStrategy>(),
-                "addfundsstrategy" => _provider.GetRequiredService<AddFundsStrategy>(),
+                BalanceStrategyType.ForceSubtractFunds => _provider.GetRequiredService<ForceSubtractFundsStrategy>(),
+                BalanceStrategyType.SubtractFunds => _provider.GetRequiredService<SubtractFundsStrategy>(),
+                BalanceStrategyType.AddFunds => _provider.GetRequiredService<AddFundsStrategy>(),
                 _ => throw new ArgumentOutOfRangeException(nameof(strategyType), $"Unknown balance strategy type: {strategyType}")
             };
         }

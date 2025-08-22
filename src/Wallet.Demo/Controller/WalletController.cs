@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Wallet.Domain.Enums;
 using Wallet.Gateway;
 using Wallet.Gateway.DTOs;
 
@@ -48,7 +49,7 @@ namespace Wallet.Demo.Controllers
             long walletId,
             [FromQuery] decimal amount,
             [FromQuery] string currency,
-            [FromQuery] string strategy)
+            [FromQuery] BalanceStrategyType strategy)
         {
             if (amount <= 0)
                 return BadRequest("Amount must be a positive number.");

@@ -1,4 +1,5 @@
 ﻿using Wallet.Domain.Entities;
+using Wallet.Domain.Enums;
 using Wallet.Gateway.DTOs;
 using Wallet.Infrastructure.Repository;
 using Wallet.Infrastructure.Strategy;
@@ -24,7 +25,7 @@ namespace Wallet.Gateway
             _cache = cache;
         }
 
-        public async Task<WalletDto> AdjustBalanceAsync(long walletId, decimal amount, string currency, string strategy, CancellationToken cancellationToken = default)
+        public async Task<WalletDto> AdjustBalanceAsync(long walletId, decimal amount, string currency, BalanceStrategyType strategy, CancellationToken cancellationToken = default)
         {
             if (amount <= 0) throw new ArgumentException("Adjustment amount must be positive.");
 
