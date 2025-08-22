@@ -22,7 +22,7 @@ A wallet application built with .NET 9.0. This app has a background job running 
   Unit and integration tests for controllers and service classes.
 
 ## 🚀 Getting Started
-1. Set Wallet.Demo as the startup project.
+1. Set **Wallet.Demo** as the startup project.
 2. Ensure you have a SQL Server instance running and update the connection string in `appsettings.json` if necessary.
 3. Run the application. It will automatically apply the latest migrations to the DB.
-4. Test in Swagger or Postman
+5. Test in Swagger (https://localhost:5001 or http://localhost:5000) or Postman
